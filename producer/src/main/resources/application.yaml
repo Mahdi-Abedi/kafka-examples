@@ -4,10 +4,12 @@ server:
 spring:
   application:
     name: producer
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
-    admin:
-      auto-create: true
+  cloud:
+    stream:
+      bindings:
+        myMessageCreated-out-0:
+          destination: my-topic
+          content-type: application/json
+      kafka:
+        binder:
+          brokers: localhost:9092

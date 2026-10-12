@@ -4,14 +4,14 @@ server:
 spring:
   application:
     name: consumer
-  kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: my-consumer-group
-      auto-offset-reset: earliest
-      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      properties:
-        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
-        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
-        spring.json.trusted.packages: "com.example.*,java.util,java.lang"
+  cloud:
+    function:
+      definition: myMessageCreated
+    stream:
+      bindings:
+        myMessageCreated-in-0:
+          destination: my-topic
+          group: notification-group
+      kafka:
+        binder:
+         brokers: localhost:9092
