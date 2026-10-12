@@ -1,20 +1,19 @@
 package com.example.producer.functions;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 
-@Service
-@RequiredArgsConstructor
+@Configuration
 public class ProducerFunctions {
-
-    private final StreamBridge streamBridge;
-
-    public void sendMyMessage() {
-        String message = "message" + UUID.randomUUID();
-        streamBridge.send("myMessageCreated-out-0", message);
-        System.out.println("Sending message : " + message);
+    @Bean
+    public Supplier<String> myMessageCreated() {
+        return () -> {
+            String message = "message" + UUID.randomUUID();
+            System.out.println("Sending message : " + message);
+            return message;
+        };
     }
 }

@@ -5,6 +5,8 @@ spring:
   application:
     name: producer
   cloud:
+    function:
+      definition: myMessageCreated
     stream:
       bindings:
         myMessageCreated-out-0:
@@ -13,3 +15,6 @@ spring:
       kafka:
         binder:
           brokers: localhost:9092
+  integration:
+    poller:
+      fixed-delay: 5000
